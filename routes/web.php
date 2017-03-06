@@ -57,6 +57,48 @@ Route::get('/update/{id}/{title}',function($id,$title){
 });
 
 
+Route::get('/all',function(){
+
+    $posts = App\Post::all();
+    foreach($posts as $post){
+        print_r($post->title);
+
+
+    }
+
+
+});
+
+
+Route::get('/find/{id}',function($id){
+
+    $post = App\Post::find($id);
+    if($post)
+        print_r($post->title);
+    else
+        echo 'nada';
+
+
+
+
+});
+
+
+
+Route::get('/posts_by/{id}',function($id){
+
+    $post = App\Post::where('id',$id)->orderBy('id','desc')->take(1)->get();
+
+    if((array)$post == $post)
+        print_r($post[0]->title);
+    else
+        echo 'nada';
+
+
+
+
+});
+
 Route::get('/delete/{id}',function($id){
 
     $deleted = DB::delete('delete from posts where id = ?',[$id]);
